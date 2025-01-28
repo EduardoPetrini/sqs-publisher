@@ -26,8 +26,10 @@ A TypeScript application demonstrating AWS SQS operations using LocalStack for l
 
 2. The application is pre-configured to use LocalStack's endpoint. You can see this configuration in `index.ts`:
    ```typescript:index.ts
-   startLine: 7
-   endLine: 10
+   const SQS = new AWS.SQS({
+    endpoint: "http://localhost:4566",
+    sslEnabled: false,
+   });
    ```
 
 ## Available Scripts
@@ -59,6 +61,7 @@ Here are some examples of how to use the application:
 
 ```typescript
 import { listQueues } from "./lib/listQueues";
+
 const queues = await listQueues(SQS);
 ```
 
@@ -66,6 +69,7 @@ const queues = await listQueues(SQS);
 
 ```typescript
 import { createQueue } from "./lib/createQueue";
+
 const SQS = new AWS.SQS({
   endpoint: "http://localhost:4566",
   sslEnabled: false,
@@ -77,10 +81,12 @@ const result = await createQueue(SQS, "test-queue-1");
 
 ```typescript
 import { deleteQueues } from "./lib/deleteQueues";
+
 const SQS = new AWS.SQS({
   endpoint: "http://localhost:4566",
   sslEnabled: false,
 });
+
 const result = await deleteQueues(SQS, ["queue-url-1", "queue-url-2"]);
 ```
 ## Project Structure

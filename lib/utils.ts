@@ -4,3 +4,7 @@
 export const randomString = (length: number = 10): string => {
   return Math.random().toString(36).substring(2, length + 2);
 };
+
+export const generateQueueName = (prefix: string): string => {
+  return `${prefix}-${randomString(5)}`;
+};

@@ -3,6 +3,7 @@ import { listQueues } from "./lib/listQueues";
 import { deleteQueues } from "./lib/deleteQueues";
 import { createQueue } from "./lib/createQueue";
 import { sendMessage } from "./lib/sendMessage";
+import { generateQueueName } from "./lib/utils";
 AWS.config.update({ region: "us-east-1" });
 
 const SQS = new AWS.SQS({
@@ -19,7 +20,7 @@ const SQS = new AWS.SQS({
     console.log(deletedQueues);
   }
 
-  const result = await createQueue(SQS, "test-queue-1");
+  const result = await createQueue(SQS, generateQueueName("test-queue"));
   console.log(result);
 
   if (result.QueueUrl) {
