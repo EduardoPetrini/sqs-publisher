@@ -1,3 +1,4 @@
+import { setTimeout } from "timers/promises";
 import { QueueUrlList } from "aws-sdk/clients/sqs";
 
 export const deleteQueues = async (sqs: AWS.SQS, queueUrls: QueueUrlList) => {
@@ -8,6 +9,9 @@ export const deleteQueues = async (sqs: AWS.SQS, queueUrls: QueueUrlList) => {
       results.push(data);
     }
 
+    // Wait for 1 minute before returning
+    console.log("Waiting for 1 minute before returning");
+    await setTimeout(1000 * 60);
     return results;
   } catch (error) {
     console.error(error);

@@ -4,13 +4,16 @@ import { deleteQueues } from "./lib/deleteQueues";
 import { createQueue } from "./lib/createQueue";
 AWS.config.update({ region: "us-east-1" });
 
-const SQS = new AWS.SQS();
+const SQS = new AWS.SQS({
+  endpoint: "http://localhost:4566",
+  sslEnabled: false,
+});
 
 (async () => {
   const queues = await listQueues(SQS);
   console.log(queues);
 
-  if (queues.QueueUrls) {
+  if (queues.QueueUrls && queues.QueueUrls.length > 0) {
     const deletedQueues = await deleteQueues(SQS, queues.QueueUrls);
     console.log(deletedQueues);
   }
