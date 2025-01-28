@@ -2,6 +2,7 @@ import AWS from "aws-sdk";
 import { listQueues } from "./lib/listQueues";
 import { deleteQueues } from "./lib/deleteQueues";
 import { createQueue } from "./lib/createQueue";
+import { sendMessage } from "./lib/sendMessage";
 AWS.config.update({ region: "us-east-1" });
 
 const SQS = new AWS.SQS({
@@ -20,4 +21,13 @@ const SQS = new AWS.SQS({
 
   const result = await createQueue(SQS, "test-queue-1");
   console.log(result);
+
+  if (result.QueueUrl) {
+    const messageResult = await sendMessage(
+      SQS,
+      result.QueueUrl,
+      "Hello, World!"
+    );
+    console.log(messageResult);
+  }
 })();
